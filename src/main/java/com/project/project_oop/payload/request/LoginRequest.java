@@ -1,5 +1,6 @@
 package com.project.project_oop.payload.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +12,11 @@ import lombok.Getter;
 public class LoginRequest {
 
     @NotNull
+    @JsonProperty("username")
     private String username;
 
     @NotNull
+    @JsonProperty("password")
     private String password;
 
 }

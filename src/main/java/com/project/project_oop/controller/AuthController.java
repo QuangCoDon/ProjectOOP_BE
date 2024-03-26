@@ -22,14 +22,14 @@ public class AuthController {
     public ResponseEntity<AuthResponse> register(
             @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(new AuthResponse("test", "test"));
+        return ResponseEntity.ok(authService.register(request));
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(
             @RequestBody LoginRequest request
     ) {
-        return ResponseEntity.ok(new AuthResponse("test", "test"));
+        return ResponseEntity.ok(authService.login(request));
     }
 
 //    @PostMapping("/refresh_token")

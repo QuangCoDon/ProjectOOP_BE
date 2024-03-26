@@ -25,24 +25,19 @@ import java.util.List;
 @Builder
 public class User extends BaseModel{
 
-    @NotBlank
     private String username;
 
-    @NotBlank
     private String firstName;
 
-    @NotBlank
     private String lastName;
 
     private String about;
 
     private String avatar;
 
-    @NotBlank
     @Email
     private String email;
 
-    @NotBlank
     private String password;
 
     private Date passwordChangedAt;
@@ -51,7 +46,7 @@ public class User extends BaseModel{
 
     private Date passwordResetExpires;
 
-    private Date createdAt = new Date();
+    private Date createdAt;
 
     private Date updatedAt;
 
@@ -61,7 +56,6 @@ public class User extends BaseModel{
 
     private Date optExpiryTime;
 
-    @NotBlank
     @Enumerated(EnumType.STRING)
     private Status status;
 
