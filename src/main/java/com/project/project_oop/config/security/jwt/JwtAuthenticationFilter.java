@@ -3,7 +3,7 @@ package com.project.project_oop.config.security.jwt;
 import com.project.project_oop.config.security.user.CustomUserDetails;
 import com.project.project_oop.config.security.user.CustomUserDetailsService;
 import com.project.project_oop.dto.AuthTokenDTO;
-import com.project.project_oop.service.TokenService;
+import com.project.project_oop.repository.AuthTokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    private TokenService tokenService;
+    private AuthTokenRepository authTokenRepository;
 
     @Override
     protected void doFilterInternal(
@@ -45,8 +45,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = jwtService.extractUsername(jwt);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 CustomUserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                AuthTokenDTO token = tokenService.findByToken(jwt);
-                boolean isTokenValid = !token.isExpired() && !token.isRevoked();
+                boolean isTokenValid = authTokenRepository.findByToken(jwt).map(
+                        authToken -> authToken.getExpired() == 0 && authToken.getRevoked() == 0).orElse(false);
                 if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
