@@ -1,9 +1,12 @@
 package com.project.project_oop.controller;
 
-import com.project.project_oop.payload.request.LoginRequest;
-import com.project.project_oop.payload.request.RegisterRequest;
-import com.project.project_oop.payload.response.AuthResponse;
+import com.project.project_oop.payload.request.auth.LoginRequest;
+import com.project.project_oop.payload.request.auth.RegisterRequest;
+import com.project.project_oop.payload.response.BaseResponse;
+import com.project.project_oop.payload.response.auth.AuthResponse;
 import com.project.project_oop.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +22,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(
+    public ResponseEntity<BaseResponse> register(
             @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(authService.register(request));
@@ -32,6 +35,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
-//    @PostMapping("/refresh_token")
-//    public ResponseEntity<AuthResponse>
+    @PostMapping("/refresh_token")
+    public void refreshToken(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
+
+    }
 }

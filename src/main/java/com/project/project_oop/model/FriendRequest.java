@@ -1,6 +1,6 @@
 package com.project.project_oop.model;
 
-import com.project.project_oop.constant.FriendRequestStatus;
+import com.project.project_oop.model.constant.FriendRequestStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

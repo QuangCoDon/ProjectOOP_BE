@@ -1,4 +1,4 @@
-package com.project.project_oop.payload.request;
+package com.project.project_oop.payload.request.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;

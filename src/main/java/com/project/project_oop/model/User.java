@@ -1,21 +1,22 @@
 package com.project.project_oop.model;
 
-import com.project.project_oop.constant.Status;
+import com.project.project_oop.model.constant.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(
         name = "user",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "password")
+                @UniqueConstraint(columnNames = "password"),
+                @UniqueConstraint(columnNames = "email")
+        },
+        indexes = {
+                @Index(name = "username_index", columnList = "username"),
+                @Index(name = "email_index", columnList = "email")
         }
 )
 @Getter
@@ -25,74 +26,51 @@ import java.util.List;
 @Builder
 public class User extends BaseModel{
 
+    @Column(name = "username")
     private String username;
 
-    private String firstName;
-
-    private String lastName;
-
-    private String about;
-
-    private String avatar;
-
-    @Email
-    private String email;
-
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "firstname")
+    private String firstName;
+
+    @Column(name = "lastname")
+    private String lastName;
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    @Column(name = "about", columnDefinition = "TEXT")
+    private String about;
+
+    @Column(name = "avatar")
+    private String avatar;
+
+    @Column(name = "password_changed_at")
     private Date passwordChangedAt;
 
-    private String passwordResetToken;
-
-    private Date passwordResetExpires;
-
+    @Column(name = "created_at")
     private Date createdAt;
 
+    @Column(name = "updated_at")
     private Date updatedAt;
 
-    private boolean verified = false;
-
-    private String otp;
-
-    private Date optExpiryTime;
-
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private Status status;
 
-    @OneToMany(
-            mappedBy = "user",
-            fetch = FetchType.LAZY
-    )
-    private List<Token> tokens = new ArrayList<>();
+    @Column(name = "country")
+    private String country;
 
-    @OneToMany(
-            mappedBy = "user",
-            fetch = FetchType.LAZY
-    )
-    private List<FriendRelationship> friendRelationships = new ArrayList<>();
+    @Column(name = "city")
+    private String city;
 
-    @OneToMany(
-            mappedBy = "user",
-            fetch = FetchType.LAZY
-    )
-    private List<Participant> participants = new ArrayList<>();
-
-    @OneToMany(
-            mappedBy = "sender",
-            fetch = FetchType.LAZY
-    )
-    private List<FriendRequest> friendRequestsSend = new ArrayList<>();
-
-    @OneToMany(
-            mappedBy = "receiver",
-            fetch = FetchType.LAZY
-    )
-    private List<FriendRequest> friendRequestsReceive = new ArrayList<>();
-
-    @OneToMany(
-            mappedBy = "sender",
-            fetch = FetchType.LAZY
-    )
-    private List<Message> messages = new ArrayList<>();
+    @Column(name = "address")
+    private String address;
 
 }

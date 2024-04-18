@@ -1,4 +1,4 @@
-package com.project.project_oop.constant;
+package com.project.project_oop.model.constant;
 
 public enum MessageType {
     TEXT,
